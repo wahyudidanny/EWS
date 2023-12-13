@@ -1,0 +1,14 @@
+C:\AllProject\EWS\EWS.APP\bin\Debug\net6.0\EWS.APP.exe
+C:\AllProject\EWS\EWS.APP\bin\Debug\net6.0\EWS.APP.deps.json
+C:\AllProject\EWS\EWS.APP\bin\Debug\net6.0\EWS.APP.runtimeconfig.json
+C:\AllProject\EWS\EWS.APP\bin\Debug\net6.0\EWS.APP.dll
+C:\AllProject\EWS\EWS.APP\bin\Debug\net6.0\EWS.APP.pdb
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.GeneratedMSBuildEditorConfig.editorconfig
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.AssemblyInfoInputs.cache
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.AssemblyInfo.cs
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.csproj.CoreCompileInputs.cache
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.dll
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\refint\EWS.APP.dll
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.pdb
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\EWS.APP.genruntimeconfig.cache
+C:\AllProject\EWS\EWS.APP\obj\Debug\net6.0\ref\EWS.APP.dll
