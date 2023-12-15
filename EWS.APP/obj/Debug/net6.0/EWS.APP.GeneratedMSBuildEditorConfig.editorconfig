@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = EWS.APP
-build_property.ProjectDir = c:\AllProject\EWS\EWS.APP\
+build_property.ProjectDir = C:\AllProject\EWS\EWS.APP\
