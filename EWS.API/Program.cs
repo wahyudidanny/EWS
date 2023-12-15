@@ -12,6 +12,7 @@ builder.Services.AddScoped<T_MsEwsRepository>();
 builder.Services.AddScoped<T_MsEwsServices>();
 
 builder.Services.AddControllers();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

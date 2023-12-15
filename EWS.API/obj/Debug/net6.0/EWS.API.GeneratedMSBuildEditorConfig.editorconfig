@@ -12,6 +12,6 @@ build_property.RootNamespace = EWS.API
 build_property.ProjectDir = C:\AllProject\EWS\EWS.API\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\AllProject\EWS\EWS.API
 build_property._RazorSourceGeneratorDebug = 

@@ -37,108 +37,124 @@ namespace EWS.API.Services
         }
 
 
+
+        private string GetTitlePdf()
+        {
+            string htmlcontent = "<div style='margin-top:-27px; padding-top:10px;'>";
+            htmlcontent += "<h4 style='text-align:center'><span style='font-family:Arial,Helvetica,sans-serif;font-size:10px'>";
+            htmlcontent += "<strong>&nbsp;PERINGATAN DINI - EARLY WARNING SYSTEM - BLOK UN-SATISFACTORY (US) PRODUKSI VS BGT - PT CLP </strong><br>";
+            htmlcontent += "<strong>&nbsp;PERIODE DATA SD OKTOBER - TANGGAL 24 NOVEMBER 2023 </strong>";
+            htmlcontent += "</span></h4>";
+            htmlcontent += "<div>";
+            return htmlcontent;
+        }
+
         private string GetHeaderPdf()
         {
 
-            string htmlcontent = "<div style='text-align: center;'>";
-
-            htmlcontent += "<table style='border: 1px solid black; border-collapse: collapse; width: 100%;margin: auto;'>";
+            string htmlcontent = "<div style='margin-top:-25px;padding-top:10px;'>";
+            htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
 
             for (int i = 0; i < 3; i++)
             {
                 htmlcontent += "<tr>";
-
                 for (int j = 0; j < 7; j++)
                 {
-                    var tdWidthPercentage = 100 / 7;
+                    // var tdWidthPercentage = 100 / 7;
                     string cellColor = GetCellColor(j);
-                    htmlcontent += "<td style='width: " + tdWidthPercentage + "%; text-align: left; padding: 2px; background-color: " + cellColor + ";'>";
-                    htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 11px;'>Cell 1</span>";
+                    htmlcontent += "<td style='text-align:left; padding: 0.5px; background-color: " + cellColor + ";'>";
+                    htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 9px;'>Cell 1</span>";
+                    htmlcontent += "</td>";
+                }
+                htmlcontent += "</tr>";
+            }
+
+            htmlcontent += "</table>";
+            htmlcontent += "</div>";
+
+
+            htmlcontent += "<br>";
+            return htmlcontent;
+        }
+
+        private string GetValuePdf()
+        {
+
+            string htmlcontent = "";
+
+            for (int i = 1; i <= 26; i++)
+            {
+                htmlcontent += "<tr>";
+                htmlcontent += "<td style='border: 1px solid black;width:100px;'>Merge cell</td>";
+
+                for (int j = 0; j < 11; j++)
+                {
+                    string cellColor = GetCellColor(j);
+                    htmlcontent += "<td style='width:30px; text-align: left; padding: 2px; background-color: " + cellColor + "; border: 1px solid black;'>";
+                    htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 9px;'>Cell " + (j + 1) + "</span>";
                     htmlcontent += "</td>";
                 }
 
                 htmlcontent += "</tr>";
 
             }
-
-            htmlcontent += "</table>";
-            htmlcontent += "</div>";
-
             return htmlcontent;
         }
-
 
         private string GetBodyPdf()
         {
 
             string htmlcontent = "<div style='text-align: center;'>";
 
-            htmlcontent += "<table style='border: 1px solid black; border-collapse: collapse; width: 100%; margin: auto;'>";
+            htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
 
-            // Merged cells for the first two columns in the first row
-            htmlcontent += "<tr>";
-            htmlcontent += "<td style='width: " + (100 / 11 * 2) + "%; text-align: left; padding: 2px; border: 1px solid black;' rowspan='3'>";
-            htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px;'>Merged Cells 1-2</span>";
-            htmlcontent += "</td>";
-
-            // Remaining columns in the first row
-            for (int j = 2; j < 11; j++)
-            {
-                var tdWidthPercentage = 100 / 11;
-
-                string cellColor = GetCellColor(j);
-
-                htmlcontent += "<td style='width: " + tdWidthPercentage + "%; text-align: left; padding: 2px; background-color: " + cellColor + "; border: 1px solid black;'>";
-                htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px;'>Cell " + (j + 1) + "</span>";
-                htmlcontent += "</td>";
-            }
-
-            htmlcontent += "</tr>";
-
-            // Additional rows
-            for (int i = 1; i < 3; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 htmlcontent += "<tr>";
 
-                // Remaining columns
-                for (int j = 0; j < 11; j++)
+                if (i == 1)
                 {
-                    var tdWidthPercentage = 100 / 11;
-
-                    string cellColor = GetCellColor(j);
-
-                    htmlcontent += "<td style='width: " + tdWidthPercentage + "%; text-align: left; padding: 2px; background-color: " + cellColor + "; border: 1px solid black;'>";
-                    htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px;'>Cell " + (j + 1) + "</span>";
-                    htmlcontent += "</td>";
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black; border-collapse: collapse;width:100px; ' rowspan='3'>Merge cell</td>";
                 }
 
+                if (i == 3)
+                {
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black; border-collapse: collapse;width:30px;'>Header</td>";
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black; border-collapse: collapse;background-color:#DEDEDE;' colspan='10'></td>";
+                }
+                else
+                {
+                    for (int j = 0; j < 11; j++)
+                    {
+                        string cellColor = GetCellColor(j);
+                        htmlcontent += "<td style='padding: 0; margin: 0; width:30px; text-align: left; padding: 2px; background-color: " + cellColor + "; border: 1px solid black;'>";
+                        htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 9px;'>Cell " + (j + 1) + "</span>";
+                        htmlcontent += "</td>";
+                    }
+                }
                 htmlcontent += "</tr>";
             }
-
+            htmlcontent += GetValuePdf();
             htmlcontent += "</table>";
             htmlcontent += "</div>";
-
             return htmlcontent;
         }
-
-
-
 
         public byte[] GeneratePdfContent()
         {
             byte[] response;
-
             var document = new PdfDocument();
+            string htmlcontent = "";
+            htmlcontent += GetTitlePdf();
 
-            string htmlcontent = "<div style='width:100%; text-align:center'>";
-            htmlcontent += "<h4 style='text-align:center'><span style='font-family:Arial,Helvetica,sans-serif'><span style='font-size:9px'><strong>&nbsp;PERINGATAN DINI - EARLY WARNING SYSTEM - BLOK UN-SATISFACTORY (US) PRODUKSI VS BGT - PT CLP </strong></span></span></h4>";
-            htmlcontent += "<h4 style='text-align:center'><span style='font-family:Arial,Helvetica,sans-serif'><span style='font-size:9px'><strong>PERIODE DATA SD OKTOBER - TANGGAL 24 NOVEMBER 2023</strong></span></span></h4>";
-
+            //1 loop disini
             htmlcontent += GetHeaderPdf();
-            htmlcontent += "<br>";
-            htmlcontent += GetBodyPdf();
 
-            htmlcontent += "</div>";
+            for (int i = 0; i < 2; i++)
+            {
+                htmlcontent += GetBodyPdf();
+                htmlcontent += "<br>";
+            }
 
             PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
 
