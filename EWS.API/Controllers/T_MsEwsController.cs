@@ -21,9 +21,8 @@ namespace EWS.API.Controllers
         public async Task<ActionResult> GeneratePdfContent()
         {
 
-            byte[] pdfContent = _MsEwsServices.GeneratePdfContent();
+            byte[] pdfContent = await _MsEwsServices.GenerateContentPdf();
             string filename = "Dummy_TestEWS.pdf";
-
             return File(pdfContent, "application/pdf", filename);
 
         }

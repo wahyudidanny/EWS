@@ -15,7 +15,7 @@ namespace EWS.API.Repositories
 			_context = context;
 		}
 
-		public async Task<IEnumerable<T_MsEws?>> GetAll()
+		public async Task<IEnumerable<T_MsEws?>> GetContentPdf()
 		{
 			return await _context.T_MsEws.Distinct().ToListAsync().ConfigureAwait(false);
 		}
