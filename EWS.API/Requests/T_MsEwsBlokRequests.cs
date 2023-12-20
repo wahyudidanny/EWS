@@ -1,12 +1,8 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace EWS.API.Requests
 {
-    public class T_MsEwsRequests
+    public class T_MsEwsBlokRequests
     {
-        public string? Header { get; set; }
-         public string? Satuan { get; set; }
         public string? T1 { get; set; }
         public string? T2 { get; set; }
         public string? T3 { get; set; }
