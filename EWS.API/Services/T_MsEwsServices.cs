@@ -5,6 +5,7 @@ using EWS.API.Entities;
 using PdfSharpCore;
 using PdfSharpCore.Pdf;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
+using System.Text.RegularExpressions;
 
 namespace EWS.API.Services
 {
@@ -77,32 +78,44 @@ namespace EWS.API.Services
             return htmlcontent;
         }
 
-        private string GetValuePdf(IEnumerable<T_MsEws> responsePdf) {
+
+        static string RemoveIntegerAndDot(string input)
+        {
+            // Use regular expression to match the pattern "digit(dot)"
+            string pattern = @"^\d+\.\s*";
+            string result = Regex.Replace(input, pattern, "");
+
+            return result;
+        }
+
+
+
+        private string GetValuePdf(IEnumerable<T_MsEwsRequests> responsePdf) {
 
             string htmlcontent = "";
 
-            for (int i = 0; i < responsePdf.Count(); i++)
+            for (int i = 0; i < responsePdf.Count(); i++) 
             {
                 var contentList = responsePdf.ElementAt(i);
                 var properties = contentList.GetType().GetProperties();
 
                 htmlcontent += "<tr>";
-                htmlcontent += "<td style='text-align: left; border: 1px solid black;width:100px;font-size: 9px;'>" + properties[0].GetValue(contentList) + "</td>";
-
+                htmlcontent += "<td style='text-align: left;height: 12.5px; border: 1px solid black;width:100px;'>";
+                htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>" + RemoveIntegerAndDot(properties[0].GetValue(contentList).ToString()) + "</span>";
+                htmlcontent += "</td>";
 
                 for (int j = 1; j < properties.Length; j++) {
 
                     if (properties[0].GetValue(contentList).ToString().Contains("Achv")) {
                       
-                        htmlcontent += "<td style='width:25px;padding: 2px; border: 1px solid black; background-color: red;'>";
-                        htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 9px;'>" + properties[j].GetValue(contentList) + "</span>";
+                        htmlcontent += "<td style='width:25px;height: 12.5px;padding: 2px; border: 1px solid black; background-color: red;'>";
+                        htmlcontent += "<span style='color:white;font-weight: bold;font-family: Arial, Helvetica, sans-serif; font-size: 11px;'>" + properties[j].GetValue(contentList) + "</span>";
                         htmlcontent += "</td>";
 
-                    }
-                    else {
+                    } else {
                        
-                        htmlcontent += "<td style='width:25px; padding: 2px; border: 1px solid black;'>";
-                        htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif;font-size: 9px; font-weight: bold;'>" + properties[j].GetValue(contentList) + "</span>";
+                        htmlcontent += "<td style='width:25px;height: 12.5px; padding: 2px; border: 1px solid black;'>";
+                        htmlcontent += "<span style='font-family: Arial, Helvetica, sans-serif;font-size: 11px;'>" + properties[j].GetValue(contentList) + "</span>";
                         htmlcontent += "</td>";
 
                     }
@@ -120,7 +133,7 @@ namespace EWS.API.Services
 
             var responsePdfBlok = chartRotasiSensus.Where(g => g.Header.Contains("Blok")).Select(g => MapToT_MsEwsBlokRequests(g)).ToList();
 
-            var responsePdfBody = chartRotasiSensus.Select(g => MapToT_MsEwsRequests(g)).ToList();
+            var responsePdfBody = chartRotasiSensus.Where(g => !g.Header.Contains("Blok")).Select(g => MapToT_MsEwsRequests(g)).ToList();
 
             string htmlcontent = "<div style='text-align: center;'>";
 
@@ -154,14 +167,6 @@ namespace EWS.API.Services
                         htmlcontent += "<td style='padding: 0; margin: 0; width:30px;height: 12.5px padding: 2px;background-color:#00695C; border: 1px solid black;'>";
                         htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Blok :</span>";
                         htmlcontent += "</td>";
-
-                        // for (int j = 0; j < responsePdfBlok.GetType().GetProperties().Length - 2; j++) {
-
-                        //     htmlcontent += "<td style='padding: 0; margin: 0; width:30px;height: 12.5px padding: 2px;border: 1px solid black; background-color: red;'>";
-                        //     htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>" + (responsePdfBlok[0].T1) + "</span>";
-                        //     htmlcontent += "</td>";
-
-                        // }
 
                         Type type = responsePdfBlok[0].GetType();
 
@@ -197,7 +202,7 @@ namespace EWS.API.Services
                 htmlcontent += "</tr>";
             }
 
-            htmlcontent += GetValuePdf(chartRotasiSensus);
+            htmlcontent += GetValuePdf(responsePdfBody);
             htmlcontent += "</table>";
             htmlcontent += "</div>";
             return htmlcontent;
@@ -241,8 +246,7 @@ namespace EWS.API.Services
             };
 
         }
-
-
+        
 
         public async Task<byte[]?> GenerateContentPdf() {
 
