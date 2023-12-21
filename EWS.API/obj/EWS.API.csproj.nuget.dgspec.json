@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {}
+    "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {}
   },
   "projects": {
-    "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {
+    "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
+        "projectUniqueName": "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
         "projectName": "EWS.API",
-        "projectPath": "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
+        "projectPath": "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
         "packagesPath": "C:\\Users\\danny.wahyudi\\.nuget\\packages\\",
-        "outputPath": "C:\\AllProject\\EWS\\EWS.API\\obj\\",
+        "outputPath": "c:\\AllProject\\EWS\\EWS.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
