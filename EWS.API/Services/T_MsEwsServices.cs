@@ -250,6 +250,28 @@ namespace EWS.API.Services
 
         public async Task<byte[]?> GenerateContentPdf() {
 
+            // int batchSize = 10;
+
+            // for (int i = 0; i < myList.Count; i += batchSize)
+            // {
+            //     var currentBatch = myList.Skip(i).Take(batchSize);
+
+            //     // Update Header and Satuan for each batch
+            //     string currentHeader = $"Header {i / batchSize + 1}";
+            //     string currentSatuan = "-";
+
+            //     Console.WriteLine($"Header: {currentHeader}, Satuan: {currentSatuan}");
+
+            //     foreach (var item in currentBatch)
+            //     {
+            //         // Process each item in the batch (T1 - T10, T11 - T20, ...)
+            //         Console.WriteLine($"Item: {item}");
+            //     }
+
+            //     Console.WriteLine(); // Add a separator between batches
+            // }
+
+
             var document = new PdfDocument();
 
             var chartRotasiSensus = await _msEwsRepository.GetContentPdf();
