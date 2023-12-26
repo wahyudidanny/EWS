@@ -153,8 +153,7 @@ namespace EWS.API.Services
 
                 htmlcontent += "<tr>";
 
-                if (i == 1)
-                {
+                if (i == 1) {
 
                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;width:100px;background-color:#00695C;' rowspan='3'>";
                     htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Uraian</span>";
@@ -162,8 +161,7 @@ namespace EWS.API.Services
 
                 }
 
-                if (i == 3)
-                {
+                if (i == 3) {
 
                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;width:30px;background-color:#00695C'>";
                     htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Stn</span>";
@@ -171,11 +169,9 @@ namespace EWS.API.Services
                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='10'></td>";
 
                 }
-                else
-                {
+                else {
 
-                    if (i == 1)
-                    {
+                    if (i == 1) {
 
                         htmlcontent += "<td style='padding: 0; margin: 0; width:30px;height: 12.5px padding: 2px;background-color:#00695C; border: 1px solid black;'>";
                         htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Blok :</span>";
@@ -183,9 +179,7 @@ namespace EWS.API.Services
 
                         Type type = responsePdfBlok[0].GetType();
 
-                        foreach (var property in type.GetProperties())
-                        {
-
+                        foreach (var property in type.GetProperties()) {
 
                             htmlcontent += "<td style='padding: 0; margin: 0; width:30px;height: 12.5px padding: 2px;border: 1px solid black; background-color: red;'>";
                             htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>" + property.GetValue(responsePdfBlok[0]) + "</span>";
@@ -194,16 +188,13 @@ namespace EWS.API.Services
                         }
 
 
-                    }
-                    else
-                    {
+                    } else {
 
                         htmlcontent += "<td style='padding: 0; margin: 0; width:30px;height: 12.5px padding: 2px;background-color:#00695C; border: 1px solid black;'>";
                         htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Rank :</span>";
                         htmlcontent += "</td>";
 
-                        for (int j = 0; j < 10; j++)
-                        {
+                        for (int j = 0; j < 10; j++) {
 
                             htmlcontent += "<td style='padding: 0; margin: 0; width:30px;height: 12.5px padding: 2px;border: 1px solid black; background-color: red;'>";
                             htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>" + (j + 1) + "</span>";
@@ -268,32 +259,25 @@ namespace EWS.API.Services
         }
 
 
-        public async Task<byte[]?> GenerateContentPdf()
-        {
+        public async Task<byte[]?> GenerateContentPdf() {
 
             var document = new PdfDocument();
 
             var chartRotasiSensus = await _msEwsRepository.GetContentPdf();
 
-            if (chartRotasiSensus == null)
-            {
+            if (chartRotasiSensus == null) {
 
                 return null;
 
             }
-            else
-            {
+            else {
 
                 string htmlcontent = GetTitlePdf();
                 htmlcontent += GetHeaderPdf();
 
-
                 int batchSize = 10;
 
-                // Loop through the data in batches
-                for (int batchIndex = 0; batchIndex < 3; batchIndex++)
-                {
-                    // Determine the range for the current batch
+                for (int batchIndex = 0; batchIndex < 3; batchIndex++) {
 
                     var currentBatch = chartRotasiSensus
                                     .Skip(batchIndex * batchSize)
@@ -301,8 +285,6 @@ namespace EWS.API.Services
                                     .ToList();
                                     
                 }
-
-
 
                 // int batchSize = 10;
                 // int numberOfBatches = 3;
@@ -323,17 +305,18 @@ namespace EWS.API.Services
                 // }
 
 
-                // for (int i = 0; i < chartRotasiSensus.Count(); i += batchSize) {
+                for (int i = 0; i < chartRotasiSensus.Count(); i += batchSize) {
 
-                //     var currentBatch = chartRotasiSensus.Skip(i).Take(batchSize);
+                    var currentBatch = chartRotasiSensus.Skip(i).Take(batchSize);
 
-                //     foreach (var item in currentBatch) {
+                    foreach (var item in currentBatch) {
 
-                //         htmlcontent += GetBodyPdf(chartRotasiSensus);
-                //         htmlcontent += "<br>";
-                //     }
+                        htmlcontent += GetBodyPdf(chartRotasiSensus);
+                        htmlcontent += "<br>";
+                        
+                    }
 
-                // }
+                }
 
                 // for (int i = 0; i < 1; i++) {
                 // htmlcontent += GetBodyPdf(chartRotasiSensus);
