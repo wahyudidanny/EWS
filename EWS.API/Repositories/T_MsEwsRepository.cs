@@ -83,23 +83,33 @@ namespace EWS.API.Repositories
 
 		public T_MsBusinessUnit GetDescriptionCompanyLocation(string company, string location)
 		{
-
-			using (var connection = new SqlConnection(connectionString1))
+			try
 			{
-				var data = connection.Query<T_MsBusinessUnit>("select Company,Location,Description,'PKU' RegionCode from T_MsBusinessUnit where Active = 1 and Company=" + company + " and Location=" + location);
-
-				if (data.Count() > 0)
+				using (var connection = new SqlConnection(connectionString1))
 				{
-					return data.FirstOrDefault();
+					var data = connection.Query<T_MsBusinessUnit>("select Company,Location,Description,'PKU' RegionCode from T_MsBusinessUnit where Active = 1 and Company='" + company + "' and Location='" + location +"'");
+
+					if (data.Count() > 0)
+					{
+						return data.FirstOrDefault();
+					}
 				}
+
+				return new T_MsBusinessUnit
+				{
+					Company = company,
+					Location = location,
+				};
 			}
-
-			return new T_MsBusinessUnit
+			catch (Exception e)
 			{
-				Company = company,
-				Location = location,
-			};
-
+				Console.WriteLine();
+				return new T_MsBusinessUnit
+				{
+					Company = company,
+					Location = location,
+				};
+			}
 
 		}
 

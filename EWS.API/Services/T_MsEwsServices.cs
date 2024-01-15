@@ -51,8 +51,8 @@ namespace EWS.API.Services
             var msBusinessUnit = _msEwsRepository.GetDescriptionCompanyLocation(company, location);
             string htmlcontent = "<div style='margin-top:-27px; padding-top:10px;'>";
             htmlcontent += "<h4 style='text-align:center'><span style='font-family:Arial,Helvetica,sans-serif;font-size:10px'>";
-            htmlcontent += "<strong>&nbsp;PERINGATAN DINI - EARLY WARNING SYSTEM - BLOK UN-SATISFACTORY (US) PRODUKSI VS BGT - " + msBusinessUnit.Description + " </strong><br>";
-            htmlcontent += "<strong>&nbsp;PERIODE DATA SD OKTOBER - TANGGAL " + DateTime.Now.ToString("dd MMMM yyyy") +" </strong>";
+            htmlcontent += "<strong>&nbsp;PERINGATAN DINI - EARLY WARNING SYSTEM - BLOK UN-SATISFACTORY (US) PRODUKSI VS BGT - " + msBusinessUnit.Description.ToUpper() + " </strong><br>";
+            htmlcontent += "<strong>&nbsp;PERIODE DATA SD OKTOBER - TANGGAL " + DateTime.Now.ToString("dd MMMM yyyy").ToUpper() +" </strong>";
             htmlcontent += "</span></h4>";
             htmlcontent += "<div>";
             return htmlcontent;
