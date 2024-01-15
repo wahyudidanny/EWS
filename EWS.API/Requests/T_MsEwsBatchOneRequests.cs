@@ -1,6 +1,8 @@
+using EWS.API.Interface;
+
 namespace EWS.API.Requests
 {
-    public class T_MsEwsBatchOneRequests
+    public class T_MsEwsBatchOneRequests : T_MsEwsInterface
     {
         public string? Header { get; set; }
         public string? Satuan { get; set; }

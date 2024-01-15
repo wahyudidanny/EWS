@@ -1,6 +1,8 @@
+using EWS.API.Interface;
+
 namespace EWS.API.Requests
 {
-    public class T_MsEwsRequests
+    public class T_MsEwsRequests : T_MsEwsInterface
     {
         public string? Header { get; set; }
         public string? Satuan { get; set; }
@@ -14,25 +16,6 @@ namespace EWS.API.Requests
         public string? T8 { get; set; }
         public string? T9 { get; set; }
         public string? T10 { get; set; }
-        public string? T11 { get; set; }
-        public string? T12 { get; set; }
-        public string? T13 { get; set; }
-        public string? T14 { get; set; }
-        public string? T15 { get; set; }
-        public string? T16 { get; set; }
-        public string? T17 { get; set; }
-        public string? T18 { get; set; }
-        public string? T19 { get; set; }
-        public string? T20 { get; set; }
-        public string? T21 { get; set; }
-        public string? T22 { get; set; }
-        public string? T23 { get; set; }
-        public string? T24 { get; set; }
-        public string? T25 { get; set; }
-        public string? T26 { get; set; }
-        public string? T27 { get; set; }
-        public string? T28 { get; set; }
-        public string? T29 { get; set; }
-        public string? T30 { get; set; }
+
     }
 }

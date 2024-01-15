@@ -10,7 +10,7 @@ namespace EWS.API.Repositories
         {
 
         }
-        public DbSet <T_MsEws>? T_MsEws { get; set; }
-
+        public DbSet<T_MsEws>? T_MsEws { get; set; }
+        public DbSet<T_MsEwsNew>? T_MsEwsNew { get; set; }
     }
 }
