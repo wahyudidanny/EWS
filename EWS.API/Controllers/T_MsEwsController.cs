@@ -19,10 +19,10 @@ namespace EWS.API.Controllers
         [HttpGet("PdfEws")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> GeneratePdfContent()
+        public async Task<ActionResult> GeneratePdfContent(string company,string location)
         {
 
-            byte[]? pdfContent = await _MsEwsServices.GenerateContentPdf();
+            byte[]? pdfContent = await _MsEwsServices.GenerateContentPdf( company,location);
 
             if (pdfContent != null) {
             
