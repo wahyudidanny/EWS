@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {}
+    "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {}
   },
   "projects": {
-    "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {
+    "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
+        "projectUniqueName": "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
         "projectName": "EWS.API",
-        "projectPath": "c:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
+        "projectPath": "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
         "packagesPath": "C:\\Users\\danny.wahyudi\\.nuget\\packages\\",
-        "outputPath": "c:\\AllProject\\EWS\\EWS.API\\obj\\",
+        "outputPath": "C:\\AllProject\\EWS\\EWS.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.28, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"

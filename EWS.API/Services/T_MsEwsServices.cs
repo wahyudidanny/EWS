@@ -2,7 +2,7 @@
 using EWS.API.Repositories;
 using EWS.API.Requests;
 using EWS.API.Entities;
-using EWS.API.Interface;
+using Microsoft.Extensions.Options;
 using PdfSharpCore;
 using PdfSharpCore.Pdf;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
@@ -16,12 +16,13 @@ namespace EWS.API.Services
     public class T_MsEwsServices
     {
         private readonly T_MsEwsRepository _msEwsRepository;
-        public T_MsEwsServices(T_MsEwsRepository msEwsRepository)
+        private static AppSettings _appSettings;
+        public T_MsEwsServices(T_MsEwsRepository msEwsRepository,IOptions<AppSettings> appSettings)
         {
             _msEwsRepository = msEwsRepository;
+            _appSettings = appSettings.Value;
+
         }
-
-
 
 
         private string GetCellColor(int columnIndex)
@@ -52,7 +53,7 @@ namespace EWS.API.Services
             string htmlcontent = "<div style='margin-top:-27px; padding-top:10px;'>";
             htmlcontent += "<h4 style='text-align:center'><span style='font-family:Arial,Helvetica,sans-serif;font-size:10px'>";
             htmlcontent += "<strong>&nbsp;PERINGATAN DINI - EARLY WARNING SYSTEM - BLOK UN-SATISFACTORY (US) PRODUKSI VS BGT - " + msBusinessUnit.Description.ToUpper() + " </strong><br>";
-            htmlcontent += "<strong>&nbsp;PERIODE DATA SD OKTOBER - TANGGAL " + DateTime.Now.ToString("dd MMMM yyyy").ToUpper() +" </strong>";
+            htmlcontent += "<strong>&nbsp;PERIODE DATA SD OKTOBER - TANGGAL " + DateTime.Now.ToString("dd MMMM yyyy").ToUpper() + " </strong>";
             htmlcontent += "</span></h4>";
             htmlcontent += "<div>";
             return htmlcontent;
@@ -289,63 +290,86 @@ namespace EWS.API.Services
 
         }
 
-        public async Task<byte[]?> GenerateContentPdf(string company,string location)
+
+        public async Task<bool?> GenerateLevelRekapKebun(string company, string location)
         {
 
-            var document = new PdfDocument();
+                return true;
 
-           // var contentPdf = await _msEwsRepository.GetContentPdf();
-            var contentPdf = await _msEwsRepository.GetContentByCompanyLocationPdf(company,location);
 
-            if (contentPdf == null)
+        }
+
+        public async Task<bool?> GenerateLevelRekapAfdeling(string company, string location)
+        {
+            if (_appSettings.filePath != null)
             {
-                return null;
+
+                var document = new PdfDocument();
+                // var contentPdf = await _msEwsRepository.GetContentPdf();
+                var contentPdf = await _msEwsRepository.GetContentByCompanyLocationPdf(company, location);
+
+                if (contentPdf == null)
+                {
+                    return null;
+                }
+                else
+                {
+
+                    int groupSize = 10;
+                    int checkPage = 0;
+                    int totalItems = contentPdf.Count();
+                    bool header = true;
+                    string htmlcontent = "";
+
+                    for (int startIndex = 0; startIndex < totalItems; startIndex += groupSize)
+                    {
+
+                        if (header)
+                        {
+                            htmlcontent += GetTitlePdf(company, location);
+                            htmlcontent += GetHeaderPdf();
+                            header = false;
+                        }
+
+                        List<T_MsEwsNew> result = contentPdf.Skip(startIndex).Take(groupSize).ToList();
+
+                        htmlcontent += GetBodyPdfNew(result);
+
+                        checkPage += 1;
+
+                        if (checkPage == 2)
+                        {
+                            PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
+                            htmlcontent = "";
+                            checkPage = 0;
+                            header = true;
+                        }
+
+                    }
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        document.Save(ms);
+                        var filename = company  + "_" + location + "_EWS_" + DateTime.Now.ToString("DDMMYY")  + ".pdf"; 
+                        byte[] response = ms.ToArray();
+                        string fullPath = Path.Combine(_appSettings.filePath, filename);
+                        File.WriteAllBytes(fullPath, response);
+
+                    }
+
+                    return true;
+
+                }
+
             }
             else
             {
 
-                int groupSize = 10;
-                int checkPage = 0;
-                int totalItems = contentPdf.Count();
-                Boolean header = true;
-                string htmlcontent = "";
-
-                for (int startIndex = 0; startIndex < totalItems; startIndex += groupSize)
-                {
-
-                    if (header)
-                    {
-                        htmlcontent += GetTitlePdf(company,location);
-                        htmlcontent += GetHeaderPdf();
-                        header = false;
-                    }
-
-                    List<T_MsEwsNew> result = contentPdf.Skip(startIndex).Take(groupSize).ToList();
-
-                    htmlcontent += GetBodyPdfNew(result);
-
-                    checkPage += 1;
-
-                    if (checkPage == 2)
-                    {
-                        PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
-                        htmlcontent = "";
-                        checkPage = 0;
-                        header = true;
-                    }
-
-                }
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-
-                    document.Save(ms);
-                    byte[] response = ms.ToArray();
-                    return response;
-
-                }
+                return false;
 
             }
+
+
 
         }
 

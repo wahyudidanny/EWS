@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "6EHxzYYm3hRNoH7nicEYa4VoNjXciHT7whyDB7wLdNnAFmaUErfRPnjSnpAZqOH/AM3XK7wO1MgML4alKT1Xhw==",
+  "dgSpecHash": "qnMOyC721xyS3R/jfqgXreuZZnPPQYbTzxD9ULrKiRL+sPaM8nkngZ7lTUI1EPoFi1q1g4fX8DCZxl5/vRKb+Q==",
   "success": true,
   "projectFilePath": "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\danny.wahyudi\\.nuget\\packages\\dapper\\2.1.28\\dapper.2.1.28.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

@@ -16,25 +16,51 @@ namespace EWS.API.Controllers
             _MsEwsServices = MsEwsServices;
         }
 
-        [HttpGet("PdfEws")]
+        [HttpGet("LevelRekapAfdeling")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> GeneratePdfContent(string company,string location)
+        public async Task<ActionResult> GenerateLevelRekapAfdeling(string company, string location)
         {
 
-            byte[]? pdfContent = await _MsEwsServices.GenerateContentPdf( company,location);
 
-            if (pdfContent != null) {
-            
-                return File(pdfContent, "application/pdf",  "Dummy_TestEWS.pdf"); 
+            bool? generatePdf = await _MsEwsServices.GenerateLevelRekapAfdeling(company, location);
+            if (generatePdf != null)
+            {
 
-            }else {
-                
-                return NotFound("Requested data not found");
+                return Ok("Successfull Generate PDF");
 
+            }
+            else
+            {
+
+                return NotFound("Generate PDF Failed!! Please Check Your Log");
+            }
+
+        }
+
+
+        [HttpGet("LevelRekapKebun")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> GenerateLevelRekapKebun(string company, string location)
+        {
+
+
+            bool? generatePdf = await _MsEwsServices.GenerateLevelRekapKebun(company, location);
+            if (generatePdf != null)
+            {
+
+                return Ok("Successfull Generate PDF");
+
+            }
+            else
+            {
+
+                return NotFound("Generate PDF Failed!! Please Check Your Log");
             }
             
         }
+
 
     }
 }

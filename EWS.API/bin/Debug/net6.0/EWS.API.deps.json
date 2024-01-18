@@ -34,6 +34,7 @@
     ".NETCoreApp,Version=v6.0": {
       "EWS.API/1.0.0": {
         "dependencies": {
+          "Dapper": "2.1.28",
           "Microsoft.AspNetCore.Cors": "2.2.0",
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "6.0.0",
           "Microsoft.AspNetCore.Session": "2.2.0",
@@ -337,6 +338,17 @@
         },
         "compile": {
           "EWS.API.dll": {}
+        }
+      },
+      "Dapper/2.1.28": {
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.28.55233"
+          }
+        },
+        "compile": {
+          "lib/net5.0/Dapper.dll": {}
         }
       },
       "Microsoft.AspNetCore.Cors/2.2.0": {
@@ -3397,6 +3409,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Dapper/2.1.28": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ha49pzOEDmCPkMxwfPSR/wxa/6RD3r42TESIgpzpi7FXq/gNVUuJVEO+wtUzntNRhtmq3BKCl0s0aAlSZLkBUA==",
+      "path": "dapper/2.1.28",
+      "hashPath": "dapper.2.1.28.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Cors/2.2.0": {
       "type": "package",
