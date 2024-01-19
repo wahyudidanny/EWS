@@ -40,6 +40,12 @@ namespace EWS.API.Repositories
 			return _context.T_PercentageAchColorEws.Where(x => x.numberStart <= valueAchieve && x.numberEnd >= valueAchieve).ToList();
 		}
 
+		public async Task<IEnumerable<T_MsRekapKebun>> GetDataRekapLevelKebun()
+		{
+			return await _context.T_MsRekapKebun.ToListAsync().ConfigureAwait(false);
+			
+		}
+
 		public async Task<IEnumerable<T_MsEwsNew?>> GetContentPdf()
 		{
 
@@ -80,6 +86,28 @@ namespace EWS.API.Repositories
 			}
 
 		}
+
+		public async Task<IEnumerable<T_MsEwsNew?>> GetContentByRekapKebun(string company, string location)
+		{
+
+			List<T_MsEwsNew> result = new List<T_MsEwsNew>();
+
+			try
+			{
+				_context.Database.SetCommandTimeout(300);
+
+				result = await _context.Set<T_MsEwsNew>().FromSqlRaw("EXECUTE dummyEWS").ToListAsync();
+
+				return result;
+
+			}
+			catch (Exception ex)
+			{
+				return result;
+			}
+
+		}
+
 
 		public T_MsBusinessUnit GetDescriptionCompanyLocation(string company, string location)
 		{

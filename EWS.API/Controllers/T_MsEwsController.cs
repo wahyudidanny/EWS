@@ -42,11 +42,11 @@ namespace EWS.API.Controllers
         [HttpGet("LevelRekapKebun")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> GenerateLevelRekapKebun(string company, string location)
+        public async Task<ActionResult> GenerateLevelRekapKebun()
         {
 
 
-            bool? generatePdf = await _MsEwsServices.GenerateLevelRekapKebun(company, location);
+            bool? generatePdf = await _MsEwsServices.GenerateLevelRekapKebun();
             if (generatePdf != null)
             {
 
