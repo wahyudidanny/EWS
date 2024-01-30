@@ -1,6 +1,4 @@
 using EWS.API.Services;
-using EWS.API.Entities;
-using EWS.API.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EWS.API.Controllers
@@ -22,22 +20,12 @@ namespace EWS.API.Controllers
         public async Task<ActionResult> GenerateLevelRekapAfdeling(string company, string location)
         {
 
-
             bool? generatePdf = await _MsEwsServices.GenerateLevelRekapAfdeling(company, location);
             if (generatePdf != null)
-            {
-
-                return Ok("Successfull Generate PDF");
-
-            }
+                return Ok("Successfull Generate PDF Afdeling");
             else
-            {
-
                 return NotFound("Generate PDF Failed!! Please Check Your Log");
-            }
-
         }
-
 
         [HttpGet("LevelRekapKebun")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -45,22 +33,26 @@ namespace EWS.API.Controllers
         public async Task<ActionResult> GenerateLevelRekapKebun()
         {
 
-
             bool? generatePdf = await _MsEwsServices.GenerateLevelRekapKebun();
             if (generatePdf != null)
-            {
-
-                return Ok("Successfull Generate PDF");
-
-            }
+                return Ok("Successfull Generate PDF Kebun");
             else
-            {
-
                 return NotFound("Generate PDF Failed!! Please Check Your Log");
-            }
-            
         }
 
+        [HttpGet("LevelRekapGroup")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> GenerateLevelRekapGroup()
+        {
+
+            bool? generatePdf = await _MsEwsServices.GenerateLevelRekapGroup();
+            if (generatePdf != null)
+                return Ok("Successfull Generate PDF Group");
+            else
+                return NotFound("Generate PDF Failed!! Please Check Your Log");
+
+        }
 
     }
 }

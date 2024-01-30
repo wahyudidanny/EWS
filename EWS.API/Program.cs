@@ -1,7 +1,7 @@
-using EWS.API.Repositories;
 using EWS.API.Services;
-using Microsoft.EntityFrameworkCore;
 using EWS.API.Entities;
+using EWS.API.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +14,10 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddDbContext<EWSDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<T_MsEwsRepository>();
 builder.Services.AddScoped<T_MsEwsServices>();
+
+
+builder.RegisterAutoMapper();
+
 
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
