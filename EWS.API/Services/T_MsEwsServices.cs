@@ -16,11 +16,16 @@ namespace EWS.API.Services
         private static AppSettings _appSettings;
         private readonly T_MsEwsRepository _msEwsRepository;
         private readonly IAutoMapperMsRekapKebun _autoMapperRekapKebun;
-        public T_MsEwsServices(T_MsEwsRepository msEwsRepository, IOptions<AppSettings> appSettings, IAutoMapperMsRekapKebun autoMapperRekapKebun)
+        private readonly IAutoMapperMsRekapGroup _autoMapperRekapGroup;
+        public T_MsEwsServices(T_MsEwsRepository msEwsRepository,
+                                IOptions<AppSettings> appSettings,
+                                IAutoMapperMsRekapKebun autoMapperRekapKebun,
+                                IAutoMapperMsRekapGroup autoMapperRekapGroup)
         {
             _msEwsRepository = msEwsRepository;
             _appSettings = appSettings.Value;
             _autoMapperRekapKebun = autoMapperRekapKebun;
+            _autoMapperRekapGroup = autoMapperRekapGroup;
         }
 
         private string GetCellColor(int columnIndex)
@@ -87,7 +92,78 @@ namespace EWS.API.Services
             return htmlcontent;
         }
 
+        private string GetBodyLevelGroup(IEnumerable<T_MsRekapGroupResponse> contentPDFResponse)
+        {
 
+            string htmlcontent = "<div style='text-align: center;'>";
+            htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
+
+            htmlcontent += "<tr>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;width:100px;background-color:#00695C;' rowspan='2'>";
+            htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Uraian</span>";
+            htmlcontent += "</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>E</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>G</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>N</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>US</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>NO BGT</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>TOTAL</td>";
+            htmlcontent += "</tr>";
+
+
+            htmlcontent += "<tr>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
+
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
+
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
+
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
+
+
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
+
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
+            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
+            htmlcontent += "</tr>";
+
+
+            foreach (var dataResponse in contentPDFResponse)
+            {
+
+                htmlcontent += "<tr>";
+
+                foreach (var property in typeof(T_MsRekapGroupResponse).GetProperties())
+                {
+
+                    object value = property.GetValue(dataResponse);
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>" + value + "</td>";
+
+                }
+
+                htmlcontent += "</tr>";
+
+            }
+
+
+            htmlcontent += "</table>";
+            htmlcontent += "</div>";
+
+            return htmlcontent;
+
+
+        }
 
         private string GetBodyLevelKebun(IEnumerable<T_MsRekapKebunResponse> contentPDFResponse)
         {
@@ -105,11 +181,8 @@ namespace EWS.API.Services
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>US</td>";
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>NO BGT</td>";
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>TOTAL</td>";
-
             htmlcontent += "</tr>";
 
-            //////
-            //////
 
             htmlcontent += "<tr>";
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
@@ -138,57 +211,23 @@ namespace EWS.API.Services
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
             htmlcontent += "</tr>";
 
-            //////
-            //////
-            
+
             foreach (var dataResponse in contentPDFResponse)
             {
 
-                   htmlcontent += "<tr>";
+                htmlcontent += "<tr>";
 
-                    foreach(T_MsRekapKebunResponse property in dataResponse[]){
+                foreach (var property in typeof(T_MsRekapKebunResponse).GetProperties())
+                {
 
+                    object value = property.GetValue(dataResponse);
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>" + value + "</td>";
 
+                }
 
-
-                    }
-               
-                   htmlcontent += "</tr>";
+                htmlcontent += "</tr>";
 
             }
-
-            // for (int i = contentPDF
-
-
-            // htmlcontent += "<tr>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>VALUE</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>HERE</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-            // htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-            // htmlcontent += "</tr>";
-
-            //////
 
 
             htmlcontent += "</table>";
@@ -206,6 +245,9 @@ namespace EWS.API.Services
 
             string htmlcontent = "<div style='text-align: center;'>";
             htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
+
+
+
 
             foreach (var valueUrutan in allUrutan)
             {
@@ -344,30 +386,66 @@ namespace EWS.API.Services
         }
 
 
+        public async Task GenerateEWSAllRegion()
+        {
+            await _msEwsRepository.GenerateEWSAllRegion();
+        }
+
+
 
         public async Task<bool?> GenerateLevelRekapGroup()
         {
-            if (_appSettings.filePath != null)
+            if (_appSettings.filePathLevelGroup != null)
             {
-
                 var document = new PdfDocument();
-                var contentPdf = await _msEwsRepository.GetDataRekapLevelKebun();
-                return true;
+                var contentPdf = await _msEwsRepository.GetDataRekapLevelGroup();
+                if (contentPdf == null)
+                {
+                    return null;
+                }
+                else
+                {
+
+                    string htmlcontent = "";
+                    string company = "01";
+                    string location = "21";
+
+                    var rekapGroupResponse = contentPdf.Select(g => _autoMapperRekapGroup.GetMapper().Map<T_MsRekapGroupResponse>(g)).ToList();
+
+                    htmlcontent += GetTitlePdf(company, location);
+
+                    htmlcontent += GetBodyLevelGroup(rekapGroupResponse);
+
+                    PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        document.Save(ms);
+                        var filename = company + "_" + location + "_EWS_Group_" + DateTime.Now.ToString("ddmmyyyy") + ".pdf";
+                        byte[] response = ms.ToArray();
+                        string fullPath = Path.Combine(_appSettings.filePathLevelGroup, filename);
+                        File.WriteAllBytes(fullPath, response);
+
+                    }
+
+                    return true;
+
+                }
 
             }
             else
             {
+
                 return false;
+
             }
         }
 
         public async Task<bool?> GenerateLevelRekapKebun()
         {
 
-            if (_appSettings.filePath != null)
-
+            if (_appSettings.filePathLevelKebun != null)
             {
-
                 var document = new PdfDocument();
                 var contentPdf = await _msEwsRepository.GetDataRekapLevelKebun();
                 if (contentPdf == null)
@@ -392,9 +470,9 @@ namespace EWS.API.Services
                     using (MemoryStream ms = new MemoryStream())
                     {
                         document.Save(ms);
-                        var filename = company + "_" + location + "_EWS_Kebun_" + DateTime.Now.ToString("DDMMYY") + ".pdf";
+                        var filename = company + "_" + location + "_EWS_Kebun_" + DateTime.Now.ToString("ddmmyyyy") + ".pdf";
                         byte[] response = ms.ToArray();
-                        string fullPath = Path.Combine(_appSettings.filePath, filename);
+                        string fullPath = Path.Combine(_appSettings.filePathLevelKebun, filename);
                         File.WriteAllBytes(fullPath, response);
 
                     }
@@ -413,8 +491,6 @@ namespace EWS.API.Services
 
 
         }
-
-
 
         public async Task<bool?> GenerateLevelRekapAfdeling(string company, string location)
         {
@@ -467,7 +543,7 @@ namespace EWS.API.Services
                     using (MemoryStream ms = new MemoryStream())
                     {
                         document.Save(ms);
-                        var filename = company + "_" + location + "_EWS_" + DateTime.Now.ToString("DDMMYY") + ".pdf";
+                        var filename = company + "_" + location + "_EWS_" + DateTime.Now.ToString("ddmmyyyy") + ".pdf";
                         byte[] response = ms.ToArray();
                         string fullPath = Path.Combine(_appSettings.filePath, filename);
                         File.WriteAllBytes(fullPath, response);

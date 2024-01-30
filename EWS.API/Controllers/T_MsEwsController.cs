@@ -54,5 +54,24 @@ namespace EWS.API.Controllers
 
         }
 
+
+        [HttpGet("GenerateAllRegion")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GenerateAllRegion()
+        {
+
+            try
+            {
+                await _MsEwsServices.GenerateEWSAllRegion();
+                return Ok("Successfull Execute All Region");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+        }
+
     }
 }
