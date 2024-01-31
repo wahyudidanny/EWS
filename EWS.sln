@@ -5,7 +5,6 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EWS.API", "EWS.API\EWS.API.csproj", "{E3F6C2A8-24D0-4B75-A1ED-70FAF31363C0}"
 EndProject
-
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWS.Job", "EWS.Job\EWS.Job.csproj", "{7AFE771B-704A-4123-A5CF-C3A0F10F2F5D}"
 EndProject
 Global

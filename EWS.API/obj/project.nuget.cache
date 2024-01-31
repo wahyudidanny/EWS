@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "qnMOyC721xyS3R/jfqgXreuZZnPPQYbTzxD9ULrKiRL+sPaM8nkngZ7lTUI1EPoFi1q1g4fX8DCZxl5/vRKb+Q==",
+  "dgSpecHash": "MA/cZuxIJFK39PUHg+w5RQ3+K9abfuThxfCfVp6Gh/7skGnJ7zALV6FAHDC9xw4bFdl1Z5aiZIgyJyGK1Yae+Q==",
   "success": true,
   "projectFilePath": "C:\\AllProject\\EWS\\EWS.API\\EWS.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\danny.wahyudi\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\dapper\\2.1.28\\dapper.2.1.28.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
@@ -22,7 +23,7 @@
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.codeanalysis.common\\4.0.0\\microsoft.codeanalysis.common.4.0.0.nupkg.sha512",
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.0.0\\microsoft.codeanalysis.csharp.4.0.0.nupkg.sha512",
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.0\\microsoft.codeanalysis.razor.6.0.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\danny.wahyudi\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.6\\microsoft.entityframeworkcore.6.0.6.nupkg.sha512",

@@ -12,6 +12,7 @@ namespace EWS.API.Repositories
         public DbSet<T_MsRekapKebun>? T_MsRekapKebun { get; set; }
         public DbSet<T_PercentageAchColorEws>? T_PercentageAchColorEws { get; set; }
         public DbSet<T_MsRekapGroup>? T_MsRekapGroup { get; set; }
+        public DbSet<T_MsUrutanHeaderKebunGroup>? T_MsUrutanHeaderKebunGroup { get; set; }
 
     }
 }

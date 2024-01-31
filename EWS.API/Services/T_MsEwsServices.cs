@@ -146,16 +146,13 @@ namespace EWS.API.Services
 
                 foreach (var property in typeof(T_MsRekapGroupResponse).GetProperties())
                 {
-
                     object value = property.GetValue(dataResponse);
                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>" + value + "</td>";
-
                 }
 
                 htmlcontent += "</tr>";
 
             }
-
 
             htmlcontent += "</table>";
             htmlcontent += "</div>";
@@ -165,25 +162,26 @@ namespace EWS.API.Services
 
         }
 
-        private string GetBodyLevelKebun(IEnumerable<T_MsRekapKebunResponse> contentPDFResponse)
+        private string GetBodyLevelKebun(IEnumerable<T_MsRekapKebunResponse> contentPDFResponse,
+                                         IEnumerable<T_MsUrutanHeaderKebunGroup> settingHeader)
         {
 
             string htmlcontent = "<div style='text-align: center;'>";
             htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
 
             htmlcontent += "<tr>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;width:100px;background-color:#00695C;' rowspan='2'>";
-            htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Uraian</span>";
-            htmlcontent += "</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>E</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>G</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>N</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>US</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>NO BGT</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>TOTAL</td>";
+            foreach (T_MsUrutanHeaderKebunGroup setting in settingHeader)
+            {
+
+                if (setting.rowspan == true)
+                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: "+setting.heightColumn +" px border-collapse: collapse;width:"+setting.widthRow + "px;background-color:"+setting.colorBackground+";' rowspan="+setting.rowspanAmount+">" + setting.headerName +"</td>";
+                else
+                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: "+setting.heightColumn +"px border-collapse: collapse;background-color:"+setting.colorBackground+";' colspan="+setting.colspanAmount+">"+ setting.headerName +"</td>";
+
+            }
             htmlcontent += "</tr>";
 
-
+         
             htmlcontent += "<tr>";
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
             htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
@@ -231,6 +229,7 @@ namespace EWS.API.Services
 
 
             htmlcontent += "</table>";
+
             htmlcontent += "</div>";
 
             return htmlcontent;
@@ -448,6 +447,8 @@ namespace EWS.API.Services
             {
                 var document = new PdfDocument();
                 var contentPdf = await _msEwsRepository.GetDataRekapLevelKebun();
+                var settingHeader = await _msEwsRepository.GetUrutanHeaderKebunGroup();
+
                 if (contentPdf == null)
                 {
                     return null;
@@ -462,8 +463,7 @@ namespace EWS.API.Services
                     var rekapKebunResponse = contentPdf.Select(g => _autoMapperRekapKebun.GetMapper().Map<T_MsRekapKebunResponse>(g)).ToList();
 
                     htmlcontent += GetTitlePdf(company, location);
-
-                    htmlcontent += GetBodyLevelKebun(rekapKebunResponse);
+                    htmlcontent += GetBodyLevelKebun(rekapKebunResponse, settingHeader);
 
                     PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
 

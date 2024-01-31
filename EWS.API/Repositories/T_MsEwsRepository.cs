@@ -10,24 +10,12 @@ namespace EWS.API.Repositories
 	public class T_MsEwsRepository
 	{
 		private readonly string connectionString1;
-		// private readonly string connectionString2;
-		// private readonly string connectionString3;
-		// private readonly string connectionString4;
-		// private readonly string connectionString5;
-		// private readonly string connectionString6;
-		// private readonly string connectionString7;
 		private readonly EWSDbContext _context;
-
 		public T_MsEwsRepository(IOptions<ConnectionStrings> connectionStrings, EWSDbContext context)
 		{
 			_context = context;
 			connectionString1 = connectionStrings.Value.DbConnectionString7;
-			// connectionString2 = connectionStrings.Value.DbConnectionString2;
-			// connectionString3 = connectionStrings.Value.DbConnectionString3;
-			// connectionString4 = connectionStrings.Value.DbConnectionString4;
-			// connectionString5 = connectionStrings.Value.DbConnectionString5;
-			// connectionString6 = connectionStrings.Value.DbConnectionString6;
-			// connectionString7 = connectionStrings.Value.DbConnectionString7;
+
 		}
 
 		public List<T_MsUrutanEws?> GetMsUrutan()
@@ -48,30 +36,30 @@ namespace EWS.API.Repositories
 
 		public async Task<IEnumerable<T_MsRekapGroup>> GetDataRekapLevelGroup()
 		{
-			return await _context.T_MsRekapGroup.ToListAsync().ConfigureAwait(false);
 
+			return await _context.T_MsRekapGroup.ToListAsync().ConfigureAwait(false);
 		}
+
+		public async Task<IEnumerable<T_MsUrutanHeaderKebunGroup>> GetUrutanHeaderKebunGroup()
+		{
+			return await _context.T_MsUrutanHeaderKebunGroup.OrderBy(item => item.Id).ToListAsync().ConfigureAwait(false);
+		}
+
 		public async Task<IEnumerable<T_MsEwsNew>> GetDataRekapLevelAfdeling()
 		{
 			return await _context.T_MsEwsNew.ToListAsync().ConfigureAwait(false);
-
 		}
-
-
-
 
 		public async Task GenerateEWSAllRegion()
 		{
 			try
 			{
 				_context.Database.SetCommandTimeout(300);
-
-				// Assuming testingSP is the name of your stored procedure
 				await _context.Database.ExecuteSqlRawAsync("EXECUTE dummyEWSAll");
 			}
 			catch (Exception ex)
 			{
-				// Handle exception if needed
+
 			}
 		}
 
