@@ -6,6 +6,7 @@ namespace EWS.API.Entities
     public class T_MsUrutanHeaderKebunGroup
     {
         public int? Id { get; set; }
+        public bool? asHeader { get; set; }
         public string? uraian { get; set; }
         public string? headerName { get; set; }
         public bool? colspan { get; set; }
@@ -15,6 +16,7 @@ namespace EWS.API.Entities
         public string? colorBackground { get; set; }
         public string? fontStyle { get; set; }
         public Int32? fontSize { get; set; }
+        public string? fontWeight { get; set; }
         public string? fontColor { get; set; }
         public Int32? heightColumn { get; set; }
         public Int32? widthRow { get; set; }

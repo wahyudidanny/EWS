@@ -42,8 +42,15 @@ namespace EWS.API.Repositories
 
 		public async Task<IEnumerable<T_MsUrutanHeaderKebunGroup>> GetUrutanHeaderKebunGroup()
 		{
-			return await _context.T_MsUrutanHeaderKebunGroup.OrderBy(item => item.Id).ToListAsync().ConfigureAwait(false);
+			return await _context.T_MsUrutanHeaderKebunGroup.Where(x => x.asHeader == true).OrderBy(item => item.Id).ToListAsync().ConfigureAwait(false);
 		}
+
+
+		public async Task<IEnumerable<T_MsUrutanHeaderKebunGroup>> GetUrutanSubHeaderKebunGroup()
+		{
+			return await _context.T_MsUrutanHeaderKebunGroup.Where(x => x.asHeader == false).OrderBy(item => item.Id).ToListAsync().ConfigureAwait(false);
+		}
+
 
 		public async Task<IEnumerable<T_MsEwsNew>> GetDataRekapLevelAfdeling()
 		{

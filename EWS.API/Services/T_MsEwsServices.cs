@@ -92,22 +92,23 @@ namespace EWS.API.Services
             return htmlcontent;
         }
 
-        private string GetBodyLevelGroup(IEnumerable<T_MsRekapGroupResponse> contentPDFResponse)
+        private string GetBodyLevelGroup(IEnumerable<T_MsRekapGroupResponse> contentPDFResponse,
+                                         IEnumerable<T_MsUrutanHeaderKebunGroup> settingHeader)
         {
-
             string htmlcontent = "<div style='text-align: center;'>";
             htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
 
             htmlcontent += "<tr>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;width:100px;background-color:#00695C;' rowspan='2'>";
-            htmlcontent += "<span style='color:white;font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 10px;'>Uraian</span>";
-            htmlcontent += "</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>E</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>G</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>N</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>US</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>NO BGT</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;' colspan='3'>TOTAL</td>";
+
+            foreach (T_MsUrutanHeaderKebunGroup setting in settingHeader)
+            {
+
+                if (setting.rowspan == true)
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + " px border-collapse: collapse;width:" + setting.widthRow + "px;background-color:" + setting.colorBackground + ";' rowspan=" + setting.rowspanAmount + ">" + setting.headerName + "</td>";
+                else
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px border-collapse: collapse;background-color:" + setting.colorBackground + ";' colspan=" + setting.colspanAmount + ">" + setting.headerName + "</td>";
+
+            }
             htmlcontent += "</tr>";
 
 
@@ -162,91 +163,113 @@ namespace EWS.API.Services
 
         }
 
-        private string GetBodyLevelKebun(IEnumerable<T_MsRekapKebunResponse> contentPDFResponse,
-                                         IEnumerable<T_MsUrutanHeaderKebunGroup> settingHeader)
+        private string SettingSpanForKebunGroup(T_MsUrutanHeaderKebunGroup setting)
         {
+            string htmlcontent = "<span style='font-family:" + setting.fontStyle + "; font-color:" + setting.fontColor + "; font-weight: " + setting.fontWeight + "; font-size: " + setting.fontSize + ";'>" + setting.headerName + "</span>";
+
+            return htmlcontent;
+
+        }
+
+
+
+        private string GetBodyLevelKebun(IEnumerable<T_MsRekapKebunResponse> contentPDFResponse,
+                                        IEnumerable<T_MsUrutanHeaderKebunGroup> settingHeader,
+                                        IEnumerable<T_MsUrutanHeaderKebunGroup> settingSubHeader)
+        {
+
 
             string htmlcontent = "<div style='text-align: center;'>";
             htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
 
-            htmlcontent += "<tr>";
-            foreach (T_MsUrutanHeaderKebunGroup setting in settingHeader)
+            //Header
+
+            if (settingHeader != null)
             {
-
-                if (setting.rowspan == true)
-                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: "+setting.heightColumn +" px border-collapse: collapse;width:"+setting.widthRow + "px;background-color:"+setting.colorBackground+";' rowspan="+setting.rowspanAmount+">" + setting.headerName +"</td>";
-                else
-                     htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: "+setting.heightColumn +"px border-collapse: collapse;background-color:"+setting.colorBackground+";' colspan="+setting.colspanAmount+">"+ setting.headerName +"</td>";
-
-            }
-            htmlcontent += "</tr>";
-
-         
-            htmlcontent += "<tr>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>Blok</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>LuasHa</td>";
-            htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>%</td>";
-            htmlcontent += "</tr>";
-
-
-            foreach (var dataResponse in contentPDFResponse)
-            {
-
                 htmlcontent += "<tr>";
-
-                foreach (var property in typeof(T_MsRekapKebunResponse).GetProperties())
+                foreach (T_MsUrutanHeaderKebunGroup setting in settingHeader)
                 {
 
-                    object value = property.GetValue(dataResponse);
-                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:#DEDEDE;'>" + value + "</td>";
+                    if (setting.rowspan == true)
+                    {
+                        htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + " px border-collapse: collapse;width:" + setting.widthRow + "px;background-color:" + setting.colorBackground + ";' rowspan=" + setting.rowspanAmount + ">";
+                        htmlcontent += SettingSpanForKebunGroup(setting);
+                        htmlcontent += "</td>";
+                    }
+                    else
+                    {
+                        htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px border-collapse: collapse;background-color:" + setting.colorBackground + ";' colspan=" + setting.colspanAmount + ">";
+                        htmlcontent += SettingSpanForKebunGroup(setting);
+                        htmlcontent += "</td>";
+                    }
+                }
+                htmlcontent += "</tr>";
+            }
+            //End Header
 
+
+            //Sub Header
+
+            if (settingSubHeader != null)
+            {
+                htmlcontent += "<tr>";
+                foreach (T_MsUrutanHeaderKebunGroup setting in settingSubHeader)
+                {
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px border-collapse: collapse;background-color:" + setting.colorBackground + ";'>";
+                    htmlcontent += SettingSpanForKebunGroup(setting);
+                    htmlcontent += "</td>";
                 }
 
                 htmlcontent += "</tr>";
-
             }
+            //End Sub Header
+
+
+            //Content
+            //  if (contentPDFResponse != null)
+            //             {
+
+            // string backgroundColorContent = "#DEDEDE";  //Grey
+            // foreach (var dataResponse in contentPDFResponse)
+            // {
+
+            //     htmlcontent += "<tr>";
+
+            //     if (backgroundColorContent == "#FFFFFF")
+            //         backgroundColorContent = "#DEDEDE";
+            //     else
+            //         backgroundColorContent = "#FFFFFF";
+
+            //     foreach (var property in typeof(T_MsRekapKebunResponse).GetProperties())
+            //     {
+            //         object? value = property.GetValue(dataResponse);
+            //         htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:" + backgroundColorContent + " ;'>" + value + "</td>";
+
+            //     }
+
+            //     htmlcontent += "</tr>";
+
+            // }
+            // }
+            //End Content
+
+
 
 
             htmlcontent += "</table>";
-
             htmlcontent += "</div>";
 
             return htmlcontent;
-
 
         }
 
         private string GetBodyPdfNew(IEnumerable<T_MsEwsNew> valueGroupBody)
         {
             List<T_MsEwsNew> listvalueGroup = valueGroupBody.ToList();
-            List<T_MsUrutanEws> allUrutan = _msEwsRepository.GetMsUrutan();
+            List<T_MsUrutanEws?> allUrutan = _msEwsRepository.GetMsUrutan();
 
             string htmlcontent = "<div style='text-align: center;'>";
             htmlcontent += "<table style='border: 0.75px solid black; border-collapse: collapse; width: 90%;margin-left:25px;'>";
-
-
-
 
             foreach (var valueUrutan in allUrutan)
             {
@@ -398,6 +421,7 @@ namespace EWS.API.Services
             {
                 var document = new PdfDocument();
                 var contentPdf = await _msEwsRepository.GetDataRekapLevelGroup();
+                var settingHeader = await _msEwsRepository.GetUrutanHeaderKebunGroup();
                 if (contentPdf == null)
                 {
                     return null;
@@ -413,7 +437,7 @@ namespace EWS.API.Services
 
                     htmlcontent += GetTitlePdf(company, location);
 
-                    htmlcontent += GetBodyLevelGroup(rekapGroupResponse);
+                    htmlcontent += GetBodyLevelGroup(rekapGroupResponse, settingHeader);
 
                     PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
 
@@ -448,6 +472,7 @@ namespace EWS.API.Services
                 var document = new PdfDocument();
                 var contentPdf = await _msEwsRepository.GetDataRekapLevelKebun();
                 var settingHeader = await _msEwsRepository.GetUrutanHeaderKebunGroup();
+                var settingSubHeader = await _msEwsRepository.GetUrutanSubHeaderKebunGroup();
 
                 if (contentPdf == null)
                 {
@@ -463,7 +488,7 @@ namespace EWS.API.Services
                     var rekapKebunResponse = contentPdf.Select(g => _autoMapperRekapKebun.GetMapper().Map<T_MsRekapKebunResponse>(g)).ToList();
 
                     htmlcontent += GetTitlePdf(company, location);
-                    htmlcontent += GetBodyLevelKebun(rekapKebunResponse, settingHeader);
+                    htmlcontent += GetBodyLevelKebun(rekapKebunResponse, settingHeader, settingSubHeader);
 
                     PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
 
