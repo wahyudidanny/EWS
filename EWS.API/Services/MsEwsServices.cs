@@ -10,14 +10,14 @@ using EWS.API.Responses;
 
 namespace EWS.API.Services
 {
-    public class T_MsEwsServices
+    public class MsEwsServices
     {
 
         private static AppSettings _appSettings;
         private readonly T_MsEwsRepository _msEwsRepository;
         private readonly IAutoMapperMsRekapKebun _autoMapperRekapKebun;
         private readonly IAutoMapperMsRekapGroup _autoMapperRekapGroup;
-        public T_MsEwsServices(T_MsEwsRepository msEwsRepository,
+        public MsEwsServices(T_MsEwsRepository msEwsRepository,
                                 IOptions<AppSettings> appSettings,
                                 IAutoMapperMsRekapKebun autoMapperRekapKebun,
                                 IAutoMapperMsRekapGroup autoMapperRekapGroup)

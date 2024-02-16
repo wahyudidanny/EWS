@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using EWS.Job;
 
 
 public class Program
@@ -27,6 +28,7 @@ public class Program
         settingWAChrome = new SettingWAChrome(configuration);
 
 
+        await GenerateFile();
         // Console.WriteLine("asdasd");
         await openChromeWhatshap();
 
@@ -49,6 +51,11 @@ public class Program
 
     }
 
+    private static async Task GenerateFile()
+    {
+        string baseApiUrl = appSettings.baseApiUrl ?? "";
+        var res = await ClientProvider.GetAsync($"{baseApiUrl}/api/MsEws/LevelRekapAfdeling?company=01&location=22");
+    }
 
     private static void RunSeleniumSendAttachment()
     {

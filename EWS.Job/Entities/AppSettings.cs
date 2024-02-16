@@ -14,6 +14,7 @@ namespace EWS.Job.Entities
             _configuration = configuration;
         }
 
+        public string? baseApiUrl { get { return GetValue("baseApiUrl"); } }
         public string? filePath { get { return GetValue("filePath"); } }
         public string? generatePDF { get { return GetValue("generatePDF"); } }
         public string? sendPDFProd { get { return GetValue("sendPDFProd"); } }

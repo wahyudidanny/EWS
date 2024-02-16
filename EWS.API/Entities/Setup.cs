@@ -31,7 +31,7 @@ namespace EWS.API.Entities
 			builder.Services.AddDbContext<EWSDbContext>(options => options.UseSqlServer(connectionString));
 
 			builder.Services.AddMemoryCache();
-			builder.Services.AddScoped<T_MsEwsServices>();
+			builder.Services.AddScoped<MsEwsServices>();
 
 		}
 
