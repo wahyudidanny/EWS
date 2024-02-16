@@ -5,11 +5,11 @@ namespace EWS.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class T_MsEwsController : ControllerBase
+    public class MsEwsController : ControllerBase
     {
-        private readonly T_MsEwsServices _MsEwsServices;
+        private readonly MsEwsServices _MsEwsServices;
 
-        public T_MsEwsController(T_MsEwsServices MsEwsServices)
+        public MsEwsController(MsEwsServices MsEwsServices)
         {
             _MsEwsServices = MsEwsServices;
         }
