@@ -165,7 +165,7 @@ namespace EWS.API.Services
 
         private string SettingSpanForKebunGroup(T_MsUrutanHeaderKebunGroup setting)
         {
-            string htmlcontent = "<span style='font-family:" + setting.fontStyle + "; font-color:" + setting.fontColor + "; font-weight: " + setting.fontWeight + "; font-size: " + setting.fontSize + ";'>" + setting.headerName + "</span>";
+            string htmlcontent = "<span style='font-family:" + setting.fontStyle + ";color:" + setting.fontColor + "; font-weight: " + setting.fontWeight + "; font-size: " + setting.fontSize + ";'>" + setting.headerName + "</span>";
 
             return htmlcontent;
 
@@ -175,7 +175,8 @@ namespace EWS.API.Services
 
         private string GetBodyLevelKebun(IEnumerable<T_MsRekapKebunResponse> contentPDFResponse,
                                         IEnumerable<T_MsUrutanHeaderKebunGroup> settingHeader,
-                                        IEnumerable<T_MsUrutanHeaderKebunGroup> settingSubHeader)
+                                        IEnumerable<T_MsUrutanHeaderKebunGroup> settingSubHeader,
+                                        int settingRowsKebun)
         {
 
 
@@ -192,13 +193,13 @@ namespace EWS.API.Services
 
                     if (setting.rowspan == true)
                     {
-                        htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + " px border-collapse: collapse;width:" + setting.widthRow + "px;background-color:" + setting.colorBackground + ";' rowspan=" + setting.rowspanAmount + ">";
+                        htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + " px; border-collapse: collapse;width:" + setting.widthRow + "px;background-color:" + setting.colorBackground + ";' rowspan=" + setting.rowspanAmount + ">";
                         htmlcontent += SettingSpanForKebunGroup(setting);
                         htmlcontent += "</td>";
                     }
                     else
                     {
-                        htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px border-collapse: collapse;background-color:" + setting.colorBackground + ";' colspan=" + setting.colspanAmount + ">";
+                        htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px; border-collapse: collapse;background-color:" + setting.colorBackground + ";' colspan=" + setting.colspanAmount + ">";
                         htmlcontent += SettingSpanForKebunGroup(setting);
                         htmlcontent += "</td>";
                     }
@@ -215,7 +216,8 @@ namespace EWS.API.Services
                 htmlcontent += "<tr>";
                 foreach (T_MsUrutanHeaderKebunGroup setting in settingSubHeader)
                 {
-                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px border-collapse: collapse;background-color:" + setting.colorBackground + ";'>";
+
+                    htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: " + setting.heightColumn + "px; border-collapse: collapse;background-color:" + setting.colorBackground + ";'>";
                     htmlcontent += SettingSpanForKebunGroup(setting);
                     htmlcontent += "</td>";
                 }
@@ -226,31 +228,32 @@ namespace EWS.API.Services
 
 
             //Content
-            //  if (contentPDFResponse != null)
-            //             {
+            if (contentPDFResponse != null)
+            {
 
-            // string backgroundColorContent = "#DEDEDE";  //Grey
-            // foreach (var dataResponse in contentPDFResponse)
-            // {
+                string backgroundColorContent = "#DEDEDE";  //Grey
+                foreach (var dataResponse in contentPDFResponse)
+                {
 
-            //     htmlcontent += "<tr>";
+                    htmlcontent += "<tr>";
 
-            //     if (backgroundColorContent == "#FFFFFF")
-            //         backgroundColorContent = "#DEDEDE";
-            //     else
-            //         backgroundColorContent = "#FFFFFF";
+                    if (backgroundColorContent == "#FFFFFF")
+                        backgroundColorContent = "#DEDEDE";
+                    else
+                        backgroundColorContent = "#FFFFFF";
 
-            //     foreach (var property in typeof(T_MsRekapKebunResponse).GetProperties())
-            //     {
-            //         object? value = property.GetValue(dataResponse);
-            //         htmlcontent += "<td style='padding: 0; margin: 0;border: 1px solid black;height: 12.5px border-collapse: collapse;background-color:" + backgroundColorContent + " ;'>" + value + "</td>";
+                    foreach (var property in typeof(T_MsRekapKebunResponse).GetProperties())
+                    {
+                        object? value = property.GetValue(dataResponse);
+                
+                        htmlcontent += "<td style='padding: 0; margin: 0; font-size:10px; border: 1px solid black; height: 15px; border-collapse: collapse;background-color:" + backgroundColorContent + " ;'>" + value + "</td>";
 
-            //     }
+                    }
 
-            //     htmlcontent += "</tr>";
+                    htmlcontent += "</tr>";
 
-            // }
-            // }
+                }
+            }
             //End Content
 
 
@@ -407,11 +410,17 @@ namespace EWS.API.Services
 
         }
 
-
         public async Task GenerateEWSAllRegion()
         {
             await _msEwsRepository.GenerateEWSAllRegion();
         }
+
+
+        public async Task DummyTestAllRegion()
+        {
+            await _msEwsRepository.GenerateEWSAllRegion();
+        }
+
 
 
 
@@ -484,11 +493,12 @@ namespace EWS.API.Services
                     string htmlcontent = "";
                     string company = "01";
                     string location = "21";
-
                     var rekapKebunResponse = contentPdf.Select(g => _autoMapperRekapKebun.GetMapper().Map<T_MsRekapKebunResponse>(g)).ToList();
 
                     htmlcontent += GetTitlePdf(company, location);
-                    htmlcontent += GetBodyLevelKebun(rekapKebunResponse, settingHeader, settingSubHeader);
+                    //htmlcontent += GetBodyLevelKebun(rekapKebunResponse, settingHeader, settingSubHeader, _appSettings.settingRowsKebun?);
+
+
 
                     PdfGenerator.AddPdfPages(document, htmlcontent, PageSize.A4);
 
@@ -522,9 +532,9 @@ namespace EWS.API.Services
             if (_appSettings.filePath != null)
             {
 
-                var document = new PdfDocument();
-                // var contentPdf = await _msEwsRepository.GetContentPdf();
-                var contentPdf = await _msEwsRepository.GetContentByCompanyLocationPdf(company, location);
+                    var document = new PdfDocument();
+                    // var contentPdf = await _msEwsRepository.GetContentPdf();
+                    var contentPdf = await _msEwsRepository.GetContentByCompanyLocationPdf(company, location);
 
                 if (contentPdf == null)
                 {

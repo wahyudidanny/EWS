@@ -6,7 +6,7 @@ namespace EWS.API.Entities
         public string? filePathLevelKebun { get; set; }
         public string? filePathLevelGroup { get; set; }
         public string? chromeDriverPath { get; set; }
-        public Int32? settingRowsKebun { get; set; }
+        public Int32? settingRowsKebun { get; set; } 
 
     }
 }

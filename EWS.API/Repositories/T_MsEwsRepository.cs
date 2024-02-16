@@ -69,8 +69,6 @@ namespace EWS.API.Repositories
 
 			}
 		}
-
-
 		public async Task<IEnumerable<T_MsEwsNew?>> GetContentPdf()
 		{
 

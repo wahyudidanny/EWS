@@ -19,10 +19,7 @@ namespace EWS.Job.Entities
         public string? waSelectSearchResult { get { return GetValue("waSelectSearchResult"); } }
         public string? waAttachmentButton { get { return GetValue("waAttachmentButton"); } }
         public string? waInputFileDefault { get { return GetValue("waInputFileDefault"); } }
-public string? waTextBoxMessageImage { get { return GetValue("waTextBoxMessageImage"); } }
-
-
-
+        public string? waTextBoxMessageImage { get { return GetValue("waTextBoxMessageImage"); } }
 
         public string? GetValue(string key)
         {

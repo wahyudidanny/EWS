@@ -15,7 +15,7 @@ namespace EWS.API.Entities
         public Int32? rowspanAmount { get; set; }
         public string? colorBackground { get; set; }
         public string? fontStyle { get; set; }
-        public Int32? fontSize { get; set; }
+        public string? fontSize { get; set; }
         public string? fontWeight { get; set; }
         public string? fontColor { get; set; }
         public Int32? heightColumn { get; set; }
