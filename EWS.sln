@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EWS.API", "EWS.API\EWS.API.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWS.Job", "EWS.Job\EWS.Job.csproj", "{7AFE771B-704A-4123-A5CF-C3A0F10F2F5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EWS.Services", "EWS.Services\EWS.Services.csproj", "{067B8D0B-99D7-4EBE-BB56-47064209D1C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7AFE771B-704A-4123-A5CF-C3A0F10F2F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AFE771B-704A-4123-A5CF-C3A0F10F2F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AFE771B-704A-4123-A5CF-C3A0F10F2F5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{067B8D0B-99D7-4EBE-BB56-47064209D1C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{067B8D0B-99D7-4EBE-BB56-47064209D1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{067B8D0B-99D7-4EBE-BB56-47064209D1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{067B8D0B-99D7-4EBE-BB56-47064209D1C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

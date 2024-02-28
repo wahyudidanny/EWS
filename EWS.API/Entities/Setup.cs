@@ -25,11 +25,9 @@ namespace EWS.API.Entities
 		public static void RegisterService(this WebApplicationBuilder builder)
 		{
 
-			var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-			builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStringsDev"));
-			builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-			builder.Services.AddDbContext<EWSDbContext>(options => options.UseSqlServer(connectionString));
-
+			builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
+			builder.Services.Configure<FilePathAfdeling>(builder.Configuration.GetSection("filePathAfdeling"));
+			builder.Services.Configure<FilePathKebun>(builder.Configuration.GetSection("filePathKebun"));
 			builder.Services.AddMemoryCache();
 			builder.Services.AddScoped<T_MsEwsServices>();
 

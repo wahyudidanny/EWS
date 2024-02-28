@@ -1,23 +1,20 @@
-﻿using EWS.Job.Entities;
+﻿
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using EWS.Services.Interface;
+using EWS.Services.Models;
+using EWS.Services.Setup;
+using Microsoft.Extensions.DependencyInjection;
 
 
 public class Program
 {
 
-    private static AppSettings appSettings;
-    private static SettingWAChrome settingWAChrome;
+    private static AppSettings? appSettings;
+    private static SettingWAChrome? settingWAChrome;
     static async Task Main(string[] args)
     {
-
-        // Log.Logger = new LoggerConfiguration()
-        // .MinimumLevel.Debug()
-        // .WriteTo.File($"EWS.File/logs/EWSGeneratePDF_log_.txt", rollingInterval: RollingInterval.Day)
-        // .CreateLogger();
-
-        // Log.Information("Service start at {0}", DateTime.Now);
 
         var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -26,155 +23,82 @@ public class Program
         appSettings = new AppSettings(configuration);
         settingWAChrome = new SettingWAChrome(configuration);
 
-
-        // Console.WriteLine("asdasd");
-        await openChromeWhatshap();
-
-        // Console.WriteLine("aaaa");
-        // if (appSettings.generatePDF == "1")
-        // {
+        var services = new ServiceCollection();
+        services.RegisterContext(configuration);
+        services.RegisterService(configuration);
+        services.AddHttpClient();
 
 
-        // }
+        var serviceProvider = services.BuildServiceProvider();
+        var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
+        var _businessUnitService = serviceProvider.GetService<IDataService>();
+
+        var msBusinessUnit = _businessUnitService?.GetDataBusinessUnit().ToList() ?? new List<T_MsBusinessUnit>();
+
+
+
+        if (appSettings.generatePDF == "1")
+        {
+    
+            foreach (var data in msBusinessUnit)
+            {
+                try
+                {
+                    await GeneratePDF(data.Company, data.Location, data.RegionCode, httpClientFactory);
+
+                }
+                catch (Exception err)
+                {
+
+                    Console.WriteLine(err.ToString());
+
+                }
+            }
+
+        }
+
 
         // if (appSettings.sendPDFProd == "1")
         // {
-
+        // await openChromeWhatshap();
 
         // }
-
-
-
-
 
     }
 
 
-    private static void RunSeleniumSendAttachment()
+
+
+    static async Task GeneratePDF(string? company, string? location, string? kodeRegion, IHttpClientFactory? httpClientFactory)
     {
+
+
         try
         {
-            // IWebDriver driver;
+            string apiUrl = $"{settingWAChrome.apiBaseUrl}/api/EWS/RekapAfdeling/?company={company}&location={location}&kodeRegion={kodeRegion}";
 
-            // ChromeOptions options = new ChromeOptions();
-            // options.AddArguments(
-            //     MasterParameter
-            //         .Where(s => s.ParameterCode == "User-data-dir")
-            //         .FirstOrDefault()
-            //         .ParameterValue
-            // ); // --Prod
+            using (HttpClient client = new HttpClient())
+            {
 
-            // driver = new ChromeDriver(
-            //     MasterParameter
-            //         .Where(s => s.ParameterCode == "Chrome-driver-path")
-            //         .FirstOrDefault()
-            //         .ParameterValue,
-            //     options
-            // ); //Chrome driver path on server
-            // driver.Manage().Timeouts().PageLoad = TimeSpan.FromMinutes(60);
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-            // driver
-            //     .Navigate()
-            //     .GoToUrl(
-            //         MasterParameter
-            //             .Where(s => s.ParameterCode == "URL")
-            //             .FirstOrDefault()
-            //             .ParameterValue
-            //     ); // --URL
-            // driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMinutes(60);
-            // driver.Manage().Window.Maximize();
+                if (response.IsSuccessStatusCode)
+                {
 
-            // string Elementsearchgrup = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-search-grup-contact")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Elementclickgrup = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-click-grup-contact")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Elementtextmessage = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-text-message")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Elementchecksendedmessage = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-check-sended-message")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Elementclicksend = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-click-send-file")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Elementclickfiledokumen = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-click-file_attachment_dokumen")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Elementclip = MasterParameter
-            //     .Where(s => s.ParameterCode == "Element-click-clip")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
-            // string Spliter = MasterParameter
-            //     .Where(s => s.ParameterCode == "Enter-split-by")
-            //     .FirstOrDefault()
-            //     .ParameterValue;
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("Response from API:" + responseContent);
 
-            // List<string> SendTo = null;
-            // SendTo = new List<string>();
-            // SendTo.Add("TESTING-FR-SENSUS");
+                }
 
-            // foreach (var sendTo in SendTo)
-            // {
-            //     string Elementclickgrup2 = Elementclickgrup.Replace("@GroupContactName", sendTo);
+            }
 
-            //     //Element execution step
-            //     driver.FindElement(By.XPath(Elementsearchgrup)).SendKeys(sendTo); //--> Element search grup
-            //     Thread.Sleep(5000);
-            //     driver.FindElement(By.XPath(Elementclickgrup2)).Click(); //--> Element click grup
-            //     Thread.Sleep(3000);
-            //     driver.FindElement(By.XPath(Elementclickgrup2)).Click(); //--> Element click grup
-            //     Thread.Sleep(2000);
-            //     driver.FindElement(By.XPath(Elementclickgrup2)).Click(); //--> Element click grup
-            //     Thread.Sleep(2000);
-
-            //     driver
-            //         .FindElement(By.XPath(Elementtextmessage))
-            //         .SendKeys(
-            //             "In a few minutes you will recieved auto notification from *WhatsApp Automation System*"
-            //         ); //--> Element text message value
-            //     driver.FindElement(By.XPath(Elementtextmessage)).SendKeys(Keys.Enter); //--> Element text message
-
-            //     driver.FindElement(By.XPath(Elementclip)).Click();
-            //     for (int i = 0; i <= pathParam.Count() - 1; i++)
-            //     {
-            //         Thread.Sleep(2000);
-            //         driver.FindElement(By.XPath(Elementclickfiledokumen)).SendKeys(pathParam[i]);
-            //     }
-
-            //     //driver.FindElement(By.XPath("//span[@data-icon='send']/parent::div[@aria-label='Send']//span")).Click();
-            //     driver
-            //         .FindElement(
-            //             By.XPath("//span[@data-icon='send']/parent::div[@aria-label='Send']//span")
-            //         )
-            //         .Click();
-
-            //     driver
-            //         .FindElement(By.XPath(Elementtextmessage))
-            //         .SendKeys("-------------------------------------"); //--> Element text message value
-            //     driver.FindElement(By.XPath(Elementtextmessage)).SendKeys(Keys.Shift + Keys.Enter); //--> Element text message new line
-            //     driver
-            //         .FindElement(By.XPath(Elementtextmessage))
-            //         .SendKeys("Thankyou *WhatsApp Automation System*"); //--> Element text message value
-            //     driver.FindElement(By.XPath(Elementtextmessage)).SendKeys(Keys.Enter); //--> Element text message send
-
-            //     Thread.Sleep(1000);
-            // }
-            Thread.Sleep(5000);
-            //driver.Quit();
-            Thread.Sleep(2000);
         }
         catch (Exception e)
         {
-
+            Console.WriteLine("Response from API:" + e.ToString());
         }
+
+
     }
 
 

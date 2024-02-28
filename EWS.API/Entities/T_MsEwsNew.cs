@@ -1,10 +1,9 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace EWS.API.Entities
 {
     [Keyless]
-    public class T_MsEwsNew
+    public class T_MsEwsNew // rekap afdeling
     {
         public Int64? ranked { get; set; }
         public string? company { get; set; }

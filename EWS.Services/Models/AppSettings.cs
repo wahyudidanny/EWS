@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace EWS.Job.Entities
+namespace EWS.Services.Models
 {
     public class AppSettings
     {
@@ -14,14 +10,18 @@ namespace EWS.Job.Entities
             _configuration = configuration;
         }
 
+        public string? apiBaseUrl { get { return GetValue("apiBaseUrl"); } }
         public string? filePath { get { return GetValue("filePath"); } }
         public string? generatePDF { get { return GetValue("generatePDF"); } }
         public string? sendPDFProd { get { return GetValue("sendPDFProd"); } }
+        public string? yearGenerate { get { return GetValue("yearGenerate"); } }
+
+        public string? monthGenerate { get { return GetValue("monthGenerate"); } }
+
         public string? GetValue(string key)
         {
             var result = _configuration.GetSection("AppSettings")[key];
             return result;
         }
-
     }
 }

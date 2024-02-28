@@ -1,7 +1,5 @@
-
 using Microsoft.Extensions.Configuration;
-
-namespace EWS.Job.Entities
+namespace EWS.Services.Models
 {
     public class SettingWAChrome
     {
@@ -10,7 +8,8 @@ namespace EWS.Job.Entities
         {
             _configuration = configuration;
         }
-
+        
+        public string? apiBaseUrl { get { return GetValue("apiBaseUrl"); } }
         public string? chromeDriverPath { get { return GetValue("chromeDriverPath"); } }
         public string? chromeUserData { get { return GetValue("chromeUserData"); } }
         public string? waSearchBox { get { return GetValue("waSearchBox"); } }
@@ -29,4 +28,3 @@ namespace EWS.Job.Entities
 
     }
 }
-
